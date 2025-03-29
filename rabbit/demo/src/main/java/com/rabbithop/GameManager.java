@@ -20,10 +20,10 @@ public class GameManager {
     private int currentLevel = 1;
     private int maxLevel = 3;
     private int coins = 0;
-    private int health = 10;
+    private int health = 15;
     private boolean hasKey = false;
     private double rabbitSpeed = 50;
-    private double jumpHeight = 100;
+    private double jumpHeight = 120;
     
     // Screen instances
     private MenuScreen menuScreen;
@@ -117,10 +117,10 @@ public class GameManager {
     public void startNewGame() {
         this.currentLevel = 1;
         this.coins = 0;
-        this.health = 10;
+        this.health = 15;
         this.hasKey = false;
         this.rabbitSpeed = 50.0;
-        this.jumpHeight = 100.0;
+        this.jumpHeight = 120.0;
         
         changeScreen(GAME_SCREEN);
     }

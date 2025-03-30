@@ -59,7 +59,7 @@ public class GameScreen extends Screen {
      * Resume the game without resetting the level
      */
     public void resumeGame() {
-        // restart the game loop without regenerating the level
+
         startGameLoop();
     }
  
@@ -152,9 +152,8 @@ public class GameScreen extends Screen {
      */
     private void initializeEntities() {
         // Create rabbit
-        rabbit = new Rabbit(100, HEIGHT - GROUND_HEIGHT - 100,
-                gameManager.getRabbitSpeed(), gameManager.getJumpHeight());
- 
+        rabbit = new Rabbit(100, HEIGHT - GROUND_HEIGHT - 100, 
+        gameManager.getRabbitSpeed(), gameManager.getJumpHeight(), gameManager);
         // Create platforms
         platforms = new ArrayList<>();
  
@@ -292,8 +291,8 @@ public void setupLevel(int level) {
                 validPosition = !overlaps && isReachable;
                 attempts++;
             }
-           
-            if (validPosition && newPlatform != null) {
+        {
+            if (validPosition && newPlatform != null) 
                 tempPlatforms.add(newPlatform);
             }
         }
@@ -500,10 +499,9 @@ private boolean platformsOverlap(Platform p1, Platform p2) {
             if (!coin.isCollected() && rabbit.intersects(coin)) {
                 coin.collect();
                 gameManager.addCoins(1);
- 
-                // Play sound
-                // TODO: Add sound effect
- 
+                
+                // Play coin collect sound
+                gameManager.getSoundManager().playSound("coin_collect");
             }
         }
     }
@@ -516,9 +514,9 @@ private boolean platformsOverlap(Platform p1, Platform p2) {
             if (bush.canDamageRabbit() && rabbit.intersects(bush)) {
                 bush.hitByRabbit();
                 gameManager.hitToxicBerries();
- 
-                // Play sound
-                // TODO: Add sound effect
+                
+                // Play hurt sound
+                gameManager.getSoundManager().playSound("hurt");
             }
         }
     }

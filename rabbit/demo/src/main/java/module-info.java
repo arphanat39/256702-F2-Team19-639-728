@@ -1,8 +1,8 @@
 module com.rabbithop {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.media;
-    requires transitive javafx.graphics; // Add "transitive" here
+    requires javafx.media;  // Make sure this is included
+    requires transitive javafx.graphics;
     
     opens com.rabbithop to javafx.fxml;
     exports com.rabbithop;

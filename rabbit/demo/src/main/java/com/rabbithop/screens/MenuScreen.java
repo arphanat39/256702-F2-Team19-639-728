@@ -33,8 +33,6 @@ public class MenuScreen extends Screen {
 
     @Override
     protected void initialize() {
-        // Create root pane
-        // Create root pane
         root = new VBox(20);
         root.setAlignment(Pos.CENTER);
         
@@ -117,4 +115,5 @@ public class MenuScreen extends Screen {
         
         return button;
     }
+
 }

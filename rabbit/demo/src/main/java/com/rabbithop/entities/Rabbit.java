@@ -1,5 +1,7 @@
 package com.rabbithop.entities;
 
+import com.rabbithop.GameManager;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -30,7 +32,7 @@ public class Rabbit extends GameObject {
     // Physics constants
     private static final double GRAVITY = 0.5;
     
-    public Rabbit(double x, double y, double speed, double jumpHeight) {
+   /* public Rabbit(double x, double y, double speed, double jumpHeight) {
         super(x, y, 64, 64, "/images/rabbit_idle.png");
         this.speed = speed;
         this.jumpHeight = jumpHeight;
@@ -46,7 +48,33 @@ public class Rabbit extends GameObject {
         } catch (Exception e) {
             System.out.println("Could not load rabbit animation frames: " + e.getMessage());
         }
+    }*/
+
+    // In Rabbit.java constructor
+public Rabbit(double x, double y, double speed, double jumpHeight, GameManager gameManager) {
+    super(x, y, 64, 64, "/images/rabbit_idle.png");
+    this.speed = speed;
+    this.jumpHeight = jumpHeight;
+    this.gameManager = gameManager;
+    
+    // Add debug code to verify sprite loading
+    System.out.println("Attempting to load rabbit sprite...");
+    
+    // Load animation frames
+    runFrames = new Image[FRAME_COUNT];
+    try {
+        for (int i = 0; i < FRAME_COUNT; i++) {
+            runFrames[i] = new Image(getClass().getResourceAsStream("/images/rabbit_run_" + i + ".png"));
+            System.out.println("Loaded rabbit_run_" + i + ".png");
+        }
+        jumpFrame = new Image(getClass().getResourceAsStream("/images/rabbit_jump.png"));
+        idleFrame = new Image(getClass().getResourceAsStream("/images/rabbit_idle.png"));
+        System.out.println("All rabbit sprites loaded successfully");
+    } catch (Exception e) {
+        System.out.println("Could not load rabbit animation frames: " + e.getMessage());
+        e.printStackTrace();
     }
+}
     
     @Override
     public void update(double deltaTime) {
@@ -74,28 +102,42 @@ public class Rabbit extends GameObject {
     }
     
     @Override
-    public void render(GraphicsContext gc) {
-        Image currentSprite;
+public void render(GraphicsContext gc) {
+    // Select only ONE appropriate sprite based on rabbit state
+    Image currentSprite;
     
-        
-        if (isJumping || isFalling) {
-            currentSprite = jumpFrame;  
-        } else if (Math.abs(velocityX) > 0.1) {
-            currentSprite = runFrames[currentFrame];  
-        } else {
-            currentSprite = idleFrame;  // ใช้ภาพนิ่งเมื่อกระต่ายไม่เคลื่อนไหว
-        }
-    
-        // วาดภาพกระต่าย
-        if (currentSprite != null) {
-            if (facingRight) {
-                gc.drawImage(currentSprite, x, y, width, height);  // วาดตามทิศทางขวา
-            } else {
-                // พลิกภาพในแนวนอนเมื่อหันไปทางซ้าย
-                gc.drawImage(currentSprite, x + width, y, -width, height);  // วาดตามทิศทางซ้าย
-            }
-        }
+    if (isJumping || isFalling) {
+        // When jumping or falling, use the jump sprite
+        currentSprite = jumpFrame;
+    } else if (Math.abs(velocityX) > 0.1) {
+        // When moving horizontally, use the running animation
+        currentSprite = runFrames[currentFrame];
+    } else {
+        // When standing still, use the idle sprite
+        currentSprite = idleFrame;
     }
+    
+    // Debug check
+    if (currentSprite == null) {
+        System.out.println("Warning: Current sprite is null, using fallback");
+        currentSprite = sprite; // Use the default sprite from GameObject
+        
+        // If even that is null, draw a placeholder rectangle
+       /* if (currentSprite == null) {
+            gc.setFill(Color.PURPLE);
+            gc.fillRect(x, y, width, height);
+            return;
+        }*/
+    }
+    
+    // Draw ONLY the selected sprite with the correct orientation
+    if (facingRight) {
+        gc.drawImage(currentSprite, x, y, width, height);
+    } else {
+        // Flip the image horizontally for left-facing
+        gc.drawImage(currentSprite, x + width, y, -width, height);
+    }
+}
     
     
     /**
@@ -144,6 +186,9 @@ public class Rabbit extends GameObject {
             velocityY = -jumpHeight;
             isJumping = true;
             isOnGround = false;
+            
+            // Play jump sound
+            gameManager.getSoundManager().playSound("jump");
         }
     }
     
@@ -210,4 +255,8 @@ public class Rabbit extends GameObject {
         this.isFalling = false;
         this.isOnGround = true;
     }
+
+    // In Rabbit.java, add:
+    private GameManager gameManager;
+
 }

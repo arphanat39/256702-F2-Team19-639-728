@@ -23,7 +23,7 @@ public class GameManager {
     private int health = 15;
     private boolean hasKey = false;
     private double rabbitSpeed = 50;
-    private double jumpHeight = 120;
+    private double jumpHeight = 90;
     
     // Screen instances
     private MenuScreen menuScreen;
@@ -40,6 +40,7 @@ public class GameManager {
 
     public GameManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        this.soundManager = new SoundManager(); // Add this line
         initializeScreens();
     }
     
@@ -120,7 +121,7 @@ public class GameManager {
         this.health = 15;
         this.hasKey = false;
         this.rabbitSpeed = 50.0;
-        this.jumpHeight = 120.0;
+        this.jumpHeight = 90.0;
         
         changeScreen(GAME_SCREEN);
     }
@@ -136,20 +137,15 @@ public class GameManager {
         }
     }
     
-    /**
-     * When player completes the current level
-     */
-    public void levelComplete() {
-        changeScreen(LEVEL_COMPLETE_SCREEN);
-    }
-    
-    /**
-     * When player's health reaches critical level
-     */
     public void gameOver() {
+        //soundManager.playSound("game_over");
         changeScreen(GAME_OVER_SCREEN);
     }
     
+    public void levelComplete() {
+        //soundManager.playSound("level_complete");
+        changeScreen(LEVEL_COMPLETE_SCREEN);
+    } 
     /**
      * Add coins to player inventory
      * @param amount Amount of coins to add
@@ -267,4 +263,11 @@ public class GameManager {
     public int getMaxLevel() {
         return maxLevel;
     }
+
+    private SoundManager soundManager;
+    // Add this method to your GameManager class
+public SoundManager getSoundManager() {
+    return soundManager;
+}
+
 }

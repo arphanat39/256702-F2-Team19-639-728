@@ -76,11 +76,17 @@ public class StoreScreen extends Screen {
         // Create store items
         VBox storeItems = createStoreItems();
         
-        // Create return button
         Button returnButton = new Button("Return to Game");
         returnButton.setFont(Font.font("Arial", FontWeight.BOLD, 18));
-        returnButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 10;");
+        returnButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 10;");
         returnButton.setOnAction(e -> gameManager.returnFromStore());
+        
+        // เพิ่มเอฟเฟกต์ Hover
+        returnButton.setOnMouseEntered(e -> 
+            returnButton.setStyle("-fx-background-color: #1976D2; -fx-text-fill: white; -fx-background-radius: 10;"));
+        returnButton.setOnMouseExited(e -> 
+            returnButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 10;"));
+        
         
         // Create bottom section with message and return button
         VBox bottomSection = new VBox(15, messageText, returnButton);

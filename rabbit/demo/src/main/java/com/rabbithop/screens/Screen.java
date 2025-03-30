@@ -2,6 +2,8 @@ package com.rabbithop.screens;
 
 import com.rabbithop.GameManager;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
 /**
@@ -29,5 +31,14 @@ public abstract class Screen {
      */
     public Scene getScene() {
         return scene;
+    }
+
+    protected void addClouds() {
+        Image cloudImage = new Image("file:resources/cloud.png");  
+        ImageView cloudView = new ImageView(cloudImage);
+        cloudView.setFitWidth(200);  
+        cloudView.setFitHeight(100);
+        
+        root.getChildren().add(cloudView); 
     }
 }

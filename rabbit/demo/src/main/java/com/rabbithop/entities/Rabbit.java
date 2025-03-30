@@ -76,26 +76,27 @@ public class Rabbit extends GameObject {
     @Override
     public void render(GraphicsContext gc) {
         Image currentSprite;
+    
         
-        // Select the appropriate sprite based on rabbit state
         if (isJumping || isFalling) {
-            currentSprite = jumpFrame;
+            currentSprite = jumpFrame;  
         } else if (Math.abs(velocityX) > 0.1) {
-            currentSprite = runFrames[currentFrame];
+            currentSprite = runFrames[currentFrame];  
         } else {
-            currentSprite = idleFrame;
+            currentSprite = idleFrame;  // ใช้ภาพนิ่งเมื่อกระต่ายไม่เคลื่อนไหว
         }
-        
-        // Draw the rabbit with correct orientation
+    
+        // วาดภาพกระต่าย
         if (currentSprite != null) {
             if (facingRight) {
-                gc.drawImage(currentSprite, x, y, width, height);
+                gc.drawImage(currentSprite, x, y, width, height);  // วาดตามทิศทางขวา
             } else {
-                // Flip the image horizontally for left-facing
-                gc.drawImage(currentSprite, x + width, y, -width, height);
+                // พลิกภาพในแนวนอนเมื่อหันไปทางซ้าย
+                gc.drawImage(currentSprite, x + width, y, -width, height);  // วาดตามทิศทางซ้าย
             }
         }
     }
+    
     
     /**
      * Update animation frames

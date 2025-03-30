@@ -122,13 +122,7 @@ public void render(GraphicsContext gc) {
         System.out.println("Warning: Current sprite is null, using fallback");
         currentSprite = sprite; // Use the default sprite from GameObject
         
-        // If even that is null, draw a placeholder rectangle
-       /* if (currentSprite == null) {
-            gc.setFill(Color.PURPLE);
-            gc.fillRect(x, y, width, height);
-            return;
-        }*/
-    }
+
     
     // Draw ONLY the selected sprite with the correct orientation
     if (facingRight) {
@@ -136,7 +130,8 @@ public void render(GraphicsContext gc) {
     } else {
         // Flip the image horizontally for left-facing
         gc.drawImage(currentSprite, x + width, y, -width, height);
-    }
+    } 
+}
 }
     
     

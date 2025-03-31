@@ -41,6 +41,7 @@ public class GameManager {
     public GameManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.soundManager = new SoundManager(); // Add this line
+        soundManager.playBackgroundMusic();
         initializeScreens();
     }
     
@@ -268,6 +269,7 @@ public class GameManager {
     // Add this method to your GameManager class
 public SoundManager getSoundManager() {
     return soundManager;
+  }
 }
 
-}
+

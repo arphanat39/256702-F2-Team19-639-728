@@ -28,6 +28,7 @@ public class SoundManager {
         soundPaths.put("hurt", "/sounds/hurt.wav");
         soundPaths.put("game_over", "/sounds/game_over.wav");
         soundPaths.put("level_complete", "/sounds/level_complete.wav");
+        soundPaths.put("bgm", "/sounds/background_music.wav");
     }
     
     /**
@@ -94,4 +95,41 @@ public class SoundManager {
         soundEnabled = !soundEnabled;
         return soundEnabled;
     }
+
+    private MediaPlayer bgmPlayer; // ตัวแปรเก็บ MediaPlayer สำหรับ BGM
+
+public void playBackgroundMusic() {
+    if (!soundEnabled) return;
+
+    try {
+        String path = soundPaths.get("bgm");
+        if (path == null) {
+            System.out.println("BGM not found");
+            return;
+        }
+
+        URL resource = getClass().getResource(path);
+        if (resource == null) {
+            System.out.println("BGM resource not found: " + path);
+            return;
+        }
+
+        Media bgm = new Media(resource.toURI().toString());
+        bgmPlayer = new MediaPlayer(bgm);
+        bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE); // เล่นวนลูป
+        bgmPlayer.play();
+        
+    } catch (Exception e) {
+        System.out.println("Error playing BGM: " + e.getMessage());
+        e.printStackTrace();
+    }
 }
+
+// ฟังก์ชันหยุดเพลงพื้นหลัง
+public void stopBackgroundMusic() {
+    if (bgmPlayer != null) {
+        bgmPlayer.stop();
+    }
+}
+
+}  

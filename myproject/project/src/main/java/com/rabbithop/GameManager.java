@@ -42,7 +42,7 @@ public class GameManager {
 
     public GameManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.soundManager = new SoundManager(); // Add this line
+        this.soundManager = new SoundManager(); 
         initializeScreens();
     }
     

@@ -279,8 +279,59 @@ public class GameManager {
     // Add this method to your GameManager class
 public SoundManager getSoundManager() {
     return soundManager;
+  }
+
+
+
+
+// บันทึกเกม
+public void saveGame() {
+    GameSaveData saveData = new GameSaveData(
+        currentLevel,
+        coins,
+        health,
+        hasKey,
+        rabbitSpeed,
+        jumpHeight
+    );
+    
+    try (ObjectOutputStream out = new ObjectOutputStream(
+            new FileOutputStream("rabbithop_save.dat"))) {
+        out.writeObject(saveData);
+        System.out.println("บันทึกเกมสำเร็จ");
+    } catch (IOException e) {
+        System.out.println("ไม่สามารถบันทึกเกมได้: " + e.getMessage());
+    }
 }
 
+// load game
+public boolean loadGame() {
+    try (ObjectInputStream in = new ObjectInputStream(
+            new FileInputStream("rabbithop_save.dat"))) {
+        GameSaveData saveData = (GameSaveData) in.readObject();
+        
+        // โหลดข้อมูลเข้าสู่ GameManager
+        this.currentLevel = saveData.getCurrentLevel();
+        this.coins = saveData.getCoins();
+        this.health = saveData.getHealth();
+        this.hasKey = saveData.hasKey();
+        this.rabbitSpeed = saveData.getRabbitSpeed();
+        this.jumpHeight = saveData.getJumpHeight();
+        
+        System.out.println("โหลดเกมสำเร็จ: ด่าน " + currentLevel);
+        return true;
+    } catch (IOException | ClassNotFoundException e) {
+        System.out.println("ไม่พบไฟล์บันทึกหรือไม่สามารถโหลดได้: " + e.getMessage());
+        return false;
+    }
+}
+
+// ตรวจสอบว่ามีไฟล์บันทึกเกมหรือไม่
+public boolean hasSaveGame() {
+    File saveFile = new File("rabbithop_save.dat");
+    return saveFile.exists() && saveFile.isFile();
 }
 
 
+
+}

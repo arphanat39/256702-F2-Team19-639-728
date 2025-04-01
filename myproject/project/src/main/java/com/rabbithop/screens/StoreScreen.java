@@ -77,7 +77,7 @@ public class StoreScreen extends Screen {
         VBox storeItems = createStoreItems();
         
         Button returnButton = new Button("Return to Game");
-        returnButton.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+        returnButton.setFont(Font.font("Roboto", FontWeight.BOLD, 18));
         returnButton.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 10;");
         returnButton.setOnAction(e -> gameManager.returnFromStore());
         

@@ -104,12 +104,12 @@ private HBox createHUD() {
     HBox hud = new HBox(20);
     hud.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-padding: 10px;");
     
-    // สร้างองค์ประกอบข้อความ
+    // create text
     coinsText = new Text("coin: 0");
     healthText = new Text("HP: 15");
     levelText = new Text("Level: 1");
     
-    // จัดรูปแบบองค์ประกอบข้อความ
+    // text arrangement
     Font hudFont = Font.font("Arial", FontWeight.BOLD, 16);
     coinsText.setFont(hudFont);
     healthText.setFont(hudFont);
@@ -118,7 +118,7 @@ private HBox createHUD() {
     healthText.setFill(Color.LIGHTGREEN);
     levelText.setFill(Color.WHITE);
     
-    // ปุ่มบันทึกเกม
+    // save button
     Text saveButton = new Text("Save Game");
     saveButton.setFont(Font.font("Arial", FontWeight.BOLD, 16));
     saveButton.setFill(Color.CYAN);
@@ -127,7 +127,7 @@ private HBox createHUD() {
         showSaveConfirmation();
     });
     
-    // เอฟเฟกต์เมื่อเมาส์ชี้ที่ปุ่มบันทึกเกม
+    // effect
     saveButton.setOnMouseEntered(e -> {
         saveButton.setFill(Color.WHITE);
         saveButton.setFont(Font.font("Arial", FontWeight.BOLD, 18));
@@ -137,13 +137,13 @@ private HBox createHUD() {
         saveButton.setFont(Font.font("Arial", FontWeight.BOLD, 16));
     });
     
-    // สร้างปุ่มร้านค้า
+    // store button
     Text storeButton = new Text("Store");
     storeButton.setFont(Font.font("Arial", FontWeight.BOLD, 16));
     storeButton.setFill(Color.ORANGE);
     storeButton.setOnMouseClicked(e -> gameManager.changeScreen(GameManager.STORE_SCREEN));
     
-    // เอฟเฟกต์เมื่อเมาส์ชี้ที่ปุ่มร้านค้า
+    // effect
     storeButton.setOnMouseEntered(e -> {
         storeButton.setFill(Color.YELLOW);
         storeButton.setFont(Font.font("Arial", FontWeight.BOLD, 18));
@@ -153,15 +153,15 @@ private HBox createHUD() {
         storeButton.setFont(Font.font("Arial", FontWeight.BOLD, 16));
     });
     
-    // เพิ่มทุกองค์ประกอบลงใน HUD
+    // add in hud
     hud.getChildren().addAll(levelText, coinsText, healthText, saveButton, storeButton);
     
     return hud;
 }
 
-// เพิ่มเมธอดแสดงข้อความยืนยันการบันทึกเกม
+
 private void showSaveConfirmation() {
-    // หยุด game loop ชั่วคราว
+    // stop game loop
     stopGameLoop();
     
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -170,7 +170,7 @@ private void showSaveConfirmation() {
     alert.setContentText("Saving complete");
     alert.showAndWait();
     
-    // เริ่ม game loop ใหม่
+    // start game loop
     startGameLoop();
 }
  
@@ -671,7 +671,6 @@ private boolean platformsOverlap(Platform p1, Platform p2) {
         gc.fillRect(0, 0, WIDTH, HEIGHT);
  
         // Draw clouds or other background elements
-        // TODO: Add parallax scrolling background
     }
 }
  

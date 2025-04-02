@@ -132,7 +132,7 @@ public class GameManager {
         if (loadGame()) {
             changeScreen(GAME_SCREEN);
         } else {
-            // หากโหลดไม่สำเร็จให้เริ่มเกมใหม่
+            //reload
             startNewGame();
         }
     }
@@ -182,7 +182,7 @@ public class GameManager {
     public boolean buyHealthPotion() {
         if (coins >= 2) {
             coins -= 2;
-            health = Math.min(health + 5, 10); // Health cannot exceed 10
+            health = (health + 5 ); 
             return true;
         }
         return false;
@@ -284,7 +284,7 @@ public SoundManager getSoundManager() {
 
 
 
-// บันทึกเกม
+// savegame
 public void saveGame() {
     GameSaveData saveData = new GameSaveData(
         currentLevel,
@@ -298,9 +298,9 @@ public void saveGame() {
     try (ObjectOutputStream out = new ObjectOutputStream(
             new FileOutputStream("rabbithop_save.dat"))) {
         out.writeObject(saveData);
-        System.out.println("บันทึกเกมสำเร็จ");
+        System.out.println("Saved");
     } catch (IOException e) {
-        System.out.println("ไม่สามารถบันทึกเกมได้: " + e.getMessage());
+        System.out.println("Unable to save: " + e.getMessage());
     }
 }
 
@@ -310,7 +310,7 @@ public boolean loadGame() {
             new FileInputStream("rabbithop_save.dat"))) {
         GameSaveData saveData = (GameSaveData) in.readObject();
         
-        // โหลดข้อมูลเข้าสู่ GameManager
+        // load to GameManager
         this.currentLevel = saveData.getCurrentLevel();
         this.coins = saveData.getCoins();
         this.health = saveData.getHealth();
@@ -318,15 +318,15 @@ public boolean loadGame() {
         this.rabbitSpeed = saveData.getRabbitSpeed();
         this.jumpHeight = saveData.getJumpHeight();
         
-        System.out.println("โหลดเกมสำเร็จ: ด่าน " + currentLevel);
+        System.out.println("Load successful: Level " + currentLevel);
         return true;
     } catch (IOException | ClassNotFoundException e) {
-        System.out.println("ไม่พบไฟล์บันทึกหรือไม่สามารถโหลดได้: " + e.getMessage());
+        System.out.println("Unable to load: " + e.getMessage());
         return false;
     }
 }
 
-// ตรวจสอบว่ามีไฟล์บันทึกเกมหรือไม่
+
 public boolean hasSaveGame() {
     File saveFile = new File("rabbithop_save.dat");
     return saveFile.exists() && saveFile.isFile();
